@@ -6,16 +6,17 @@ public class Main{
 	static ArrayList<Order> orderList = new ArrayList<Order>();
 
 	public static void main(String[] args){
-		orderList = returnOrders("routingStatusV2.csv");
+		orderList = returnOrders("routingStatus.csv");
 
 		/**for (Order order : orderList){
 			System.out.println(order);
 		}**/
-		Pallet startObj = new Pallet();
-		ArrayList<Pallet> palletOrders = new ArrayList<Pallet>();
-		orderList = startObj.sortedList(orderList);
 
-		palletOrders = startObj.returnPallets(orderList);
+		Pallet palletObj = new Pallet();
+		ArrayList<Pallet> palletOrders = new ArrayList<Pallet>();
+		//orderList = startObj.sortedList(orderList);
+
+		palletOrders = palletObj.returnPallets(orderList);
 
 		outputToFile(palletOrders);
 
@@ -32,11 +33,20 @@ public class Main{
 		try{
 			Scanner reader = new Scanner(new File(fileName));
 			reader.nextLine();
+
 			while (reader.hasNext()){
 				Order orderString = new Order();
 				String splitString = reader.nextLine();
 				String[] stringArray = splitString.split(",", 25);
-				orderString.setOrder(Long.parseLong(stringArray[0]), Integer.parseInt(stringArray[1]), Integer.parseInt(stringArray[2]), stringArray[3], stringArray[4], stringArray[5], stringArray[6], stringArray[7], stringArray[8], stringArray[9], stringArray[10], stringArray[11], stringArray[12], Integer.parseInt(stringArray[13]), stringArray[14], Integer.parseInt(stringArray[15]), Integer.parseInt(stringArray[16]), Integer.parseInt(stringArray[17]), Integer.parseInt(stringArray[18]), stringArray[19], Integer.parseInt(stringArray[20]), Integer.parseInt(stringArray[21]), stringArray[22], stringArray[23], Integer.parseInt(stringArray[24]));
+				
+				orderString.setOrder(Long.parseLong(stringArray[0]), Integer.parseInt(stringArray[1]), 
+					Integer.parseInt(stringArray[2]), stringArray[3], stringArray[4], stringArray[5], 
+					stringArray[6], stringArray[7], stringArray[8], stringArray[9], stringArray[10], 
+					stringArray[11], stringArray[12], Integer.parseInt(stringArray[13]), stringArray[14], 
+					Integer.parseInt(stringArray[15]), Integer.parseInt(stringArray[16]), Integer.parseInt(stringArray[17]), 
+					Integer.parseInt(stringArray[18]), stringArray[19], Integer.parseInt(stringArray[20]), 
+					Integer.parseInt(stringArray[21]), stringArray[22], stringArray[23], Integer.parseInt(stringArray[24]));
+
 				orderList.add(orderString);
 			}
 		}
@@ -49,26 +59,33 @@ public class Main{
 	}
 
 	public static void outputToFile(ArrayList<Pallet> pallets){
+
 		String fileOutName = "Programmed Shipping Order " + pallets.get(0).palletOrders.get(0).confirmDate + ".csv";
 		fileOutName = fileOutName.replaceAll("/", "-");
 
 		try (PrintWriter writeFile = new PrintWriter(new File(fileOutName))){
+
 			StringBuilder sBuilder = new StringBuilder();
 			String message = readPallets(pallets);
 			sBuilder.append(message);
 			sBuilder.append("\n");
 			writeFile.write(sBuilder.toString());
 			writeFile.close();
+
 		} catch (FileNotFoundException e){
-			System.out.println("Error creating file");
+			System.out.println("Error creating file. Please ensure the file is closed.");
 			System.exit(1);
 		}
 	}
 
 	public static String readPallets(ArrayList<Pallet> pallets){
-		String message = "Date: " + pallets.get(0).palletOrders.get(0).confirmDate + "\n" + "Load ID: " + pallets.get(0).palletOrders.get(0).loadID + "\n\n";
+
+		String message = "Date: " + pallets.get(0).palletOrders.get(0).confirmDate + "\n" + "Load ID: " 
+		+ pallets.get(0).palletOrders.get(0).loadID + "\n\n";
+
 		for (int i = 0; i < pallets.size(); i++){
-		 	message = message + "Pallet #" + (i + 1) + "  --------------" + "----  Cases " + " ---  PO Destination # " + " ---  Layers --- Destination Address" + "\n" + pallets.get(i).getPallet() + "\n\n";
+		 	message = message + "Pallet #" + (i + 1) + "  --------------" + "----  Cases " + " ---  PO Destination # " 
+		 	+ " ---  Layers --- Destination Address" + "\n" + pallets.get(i).getPallet() + "\n\n";
 		}
 		return message;
 	}

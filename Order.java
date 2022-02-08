@@ -17,10 +17,15 @@ public class Order{
 	public int getLayers(){ return this.layers; }
 
 	public String getInfo(){ //mostly a method used for testing
-		return "PO Number: " + getPONumber() + ". Number of cases: " + getCases() + ". Number of cube: " + getCube() + ". Number of layers: " + getLayers() + " PO Destination Number: " + getPODestination() + ".";
+		return "PO Number: " + getPONumber() + ". Number of cases: " + getCases() + ". Number of cube: " + getCube() + ". Number of layers: "
+		+ getLayers() + " PO Destination Number: " + getPODestination() + ".";
 	}
 
-	public void setOrder(long poNumber, int loadID, int loadDest, String loadDestType, String loadAddress, String loadPUStartDate, String loadPUEndDate, String mabd, String carrierPUDate, String carrierDueDate, String carrierName, String scac, String mode, int shipPoint, String loadMethod, int cases, int weight, int cube, int pallets, String eventCode, int poType, int department, String confirmDate, String heldOrNo, int poDestination){
+	public void setOrder(long poNumber, int loadID, int loadDest, String loadDestType, String loadAddress, String loadPUStartDate,
+		String loadPUEndDate, String mabd, String carrierPUDate, String carrierDueDate, String carrierName, String scac, String mode, 
+		int shipPoint, String loadMethod, int cases, int weight, int cube, int pallets, String eventCode, int poType, int department, 
+		String confirmDate, String heldOrNo, int poDestination){
+
 		this.poNumber = poNumber;
 		this.loadID = loadID;
 		this.loadDest = loadDest;
@@ -199,8 +204,10 @@ public class Order{
 	@Override
 	public String toString(){     
 		if (this.cases >= 100){
-			return this.poNumber + "            " + this.cases + "                     " + this.poDestination + "                   " + this.layers + "             " + this.destAddress;
+			return this.poNumber + "            " + this.cases + "                     " + this.poDestination + "                   " 
+			+ this.layers + "             " + this.destAddress;
 		}
-		return this.poNumber + "             " + this.cases + "                      " + this.poDestination + "                   " + this.layers + "              " + this.destAddress;
+		return this.poNumber + "             " + this.cases + "                      " + this.poDestination + "                   " 
+		+ this.layers + "              " + this.destAddress;
 	}
 }
