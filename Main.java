@@ -80,6 +80,7 @@ public class Main{
 
 	public static String readPallets(ArrayList<Pallet> pallets){
 
+		sortOrders(pallets);
 		String message = "Date: " + pallets.get(0).palletOrders.get(0).confirmDate + "\n" + "Load ID: " 
 		+ pallets.get(0).palletOrders.get(0).loadID + "\n\n";
 
@@ -88,5 +89,12 @@ public class Main{
 		 	+ " ---  Layers --- Destination Address" + "\n" + pallets.get(i).getPallet() + "\n\n";
 		}
 		return message;
+	}
+
+	public static void sortOrders(ArrayList<Pallet> pallets){
+
+		for (Pallet pallet : pallets){
+			pallet.palletOrders = pallet.sortedList(pallet.palletOrders);
+		}
 	}
 }

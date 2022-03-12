@@ -12,19 +12,19 @@ public class Pallet{
 
 	public ArrayList<Order> sortedList(ArrayList<Order> orderList){
 		
-		int max = -1;
+		int min = 1000;
 		int size = orderList.size();
-		Order maxOrder = new Order();
+		Order minOrder = new Order();
 		ArrayList<Order> orders = new ArrayList<Order>();
 
 		for (int i = 0; i < size; i++){
 			for (Order order : orderList){
-				maxOrder = (order.getLayers() >= max) ? order : maxOrder;
-				max = maxOrder.getLayers();
+				minOrder = (order.getCases() <= min) ? order : minOrder;
+				min = minOrder.getCases();
 			}
-			orderList.remove(maxOrder);
-			orders.add(maxOrder);
-			max = -1;
+			orderList.remove(minOrder);
+			orders.add(minOrder);
+			min = 1000;
 		}
 		return orders;
 	}
@@ -35,6 +35,7 @@ public class Pallet{
 
 		finalList = matchPOs(orderList);
 		finalList = matchPallets(finalList, orderList);
+		finalList = finishPallets(finalList, orderList);
 		return finalList;
 	}
 
@@ -88,7 +89,6 @@ public class Pallet{
 	public ArrayList<Pallet> matchPallets(ArrayList<Pallet> finalizedPallets, ArrayList<Order> orderList){
 
 		int emergencyExit = 0;
-		boolean anyRemaining = true;
 
 		if (finalizedPallets.size() > 0){
 			for (Pallet pallet : finalizedPallets){
@@ -205,8 +205,15 @@ public class Pallet{
 				emergencyExit = 0;
 			}
 		}
-
 		emergencyExit = 0;
+		return finalizedPallets;
+	}
+		
+	public ArrayList<Pallet> finishPallets(ArrayList<Pallet> finalizedPallets, ArrayList<Order> orderList){
+
+		int emergencyExit = 0;
+		boolean anyRemaining = true;
+
 		while (anyRemaining){
 			for (Order order : orderList){
 				if (order.getLayers() == 6 && order.used == false){
@@ -248,7 +255,9 @@ public class Pallet{
 							newPallet.numLayers = newPallet.numLayers + orderList.get(i).getLayers();
 							newPallet.numPallets++;
 						}
-						else if (orderList.get(i).used == false && orderList.get(i).getLayers() == 1 && orderList.get(i).getLayers() 
+					}
+					for (int i = 0; i < orderList.size(); i++){
+						if (orderList.get(i).used == false && orderList.get(i).getLayers() == 1 && orderList.get(i).getLayers() 
 							+ newPallet.numLayers <= 6 && newPallet.numPallets <= 3){
 							newPallet.palletOrders.add(orderList.get(i));
 							orderList.get(i).used = true;
@@ -272,14 +281,18 @@ public class Pallet{
 							newPallet.numLayers = newPallet.numLayers + orderList.get(i).getLayers();
 							newPallet.numPallets++;
 						}
-						else if (orderList.get(i).used == false && orderList.get(i).getLayers() == 2 && orderList.get(i).getLayers() 
+					}
+					for (int i = 0; i < orderList.size(); i++){
+						if (orderList.get(i).used == false && orderList.get(i).getLayers() == 2 && orderList.get(i).getLayers() 
 							+ newPallet.numLayers <= 6 && newPallet.numPallets <= 3){
 							newPallet.palletOrders.add(orderList.get(i));
 							orderList.get(i).used = true;
 							newPallet.numLayers = newPallet.numLayers + orderList.get(i).getLayers();
 							newPallet.numPallets++;
 						}
-						else if (orderList.get(i).used == false && orderList.get(i).getLayers() == 1 && orderList.get(i).getLayers() 
+					}
+					for (int i = 0; i < orderList.size(); i++){
+						if (orderList.get(i).used == false && orderList.get(i).getLayers() == 1 && orderList.get(i).getLayers() 
 							+ newPallet.numLayers <= 6 && newPallet.numPallets <= 3){
 							newPallet.palletOrders.add(orderList.get(i));
 							orderList.get(i).used = true;
@@ -303,21 +316,27 @@ public class Pallet{
 							newPallet.numLayers = newPallet.numLayers + orderList.get(i).getLayers();
 							newPallet.numPallets++;
 						}
-						else if (orderList.get(i).used == false && orderList.get(i).getLayers() == 3 && orderList.get(i).getLayers() 
+					}
+					for (int i = 0; i < orderList.size(); i++){
+						if (orderList.get(i).used == false && orderList.get(i).getLayers() == 3 && orderList.get(i).getLayers() 
 							+ newPallet.numLayers <= 6 && newPallet.numPallets <= 3){
 							newPallet.palletOrders.add(orderList.get(i));
 							orderList.get(i).used = true;
 							newPallet.numLayers = newPallet.numLayers + orderList.get(i).getLayers();
 							newPallet.numPallets++;
 						}
-						else if (orderList.get(i).used == false && orderList.get(i).getLayers() == 2 && orderList.get(i).getLayers() 
+					}
+					for (int i = 0; i < orderList.size(); i++){
+						if (orderList.get(i).used == false && orderList.get(i).getLayers() == 2 && orderList.get(i).getLayers() 
 							+ newPallet.numLayers <= 6 && newPallet.numPallets <= 3){
 							newPallet.palletOrders.add(orderList.get(i));
 							orderList.get(i).used = true;
 							newPallet.numLayers = newPallet.numLayers + orderList.get(i).getLayers();
 							newPallet.numPallets++;
 						}
-						else if (orderList.get(i).used == false && orderList.get(i).getLayers() == 1 && orderList.get(i).getLayers() 
+					}
+					for (int i = 0; i < orderList.size(); i++){
+						if (orderList.get(i).used == false && orderList.get(i).getLayers() == 1 && orderList.get(i).getLayers() 
 							+ newPallet.numLayers <= 6 && newPallet.numPallets <= 3){
 							newPallet.palletOrders.add(orderList.get(i));
 							orderList.get(i).used = true;
@@ -341,28 +360,36 @@ public class Pallet{
 							newPallet.numLayers = newPallet.numLayers + orderList.get(i).getLayers();
 							newPallet.numPallets++;
 						}
-						else if (orderList.get(i).used == false && orderList.get(i).getLayers() == 4 && orderList.get(i).getLayers() 
+					}
+					for (int i = 0; i < orderList.size(); i++){
+						if (orderList.get(i).used == false && orderList.get(i).getLayers() == 4 && orderList.get(i).getLayers() 
 							+ newPallet.numLayers <= 6 && newPallet.numPallets <= 3){
 							newPallet.palletOrders.add(orderList.get(i));
 							orderList.get(i).used = true;
 							newPallet.numLayers = newPallet.numLayers + orderList.get(i).getLayers();
 							newPallet.numPallets++;
 						}
-						else if (orderList.get(i).used == false && orderList.get(i).getLayers() == 3 && orderList.get(i).getLayers() 
+					}
+					for (int i = 0; i < orderList.size(); i++){
+						if (orderList.get(i).used == false && orderList.get(i).getLayers() == 3 && orderList.get(i).getLayers() 
 							+ newPallet.numLayers <= 6 && newPallet.numPallets <= 3){
 							newPallet.palletOrders.add(orderList.get(i));
 							orderList.get(i).used = true;
 							newPallet.numLayers = newPallet.numLayers + orderList.get(i).getLayers();
 							newPallet.numPallets++;
 						}
-						else if (orderList.get(i).used == false && orderList.get(i).getLayers() == 2 && orderList.get(i).getLayers() 
+					}
+					for (int i = 0; i < orderList.size(); i++){	
+						if (orderList.get(i).used == false && orderList.get(i).getLayers() == 2 && orderList.get(i).getLayers() 
 							+ newPallet.numLayers <= 6 && newPallet.numPallets <= 3){
 							newPallet.palletOrders.add(orderList.get(i));
 							orderList.get(i).used = true;
 							newPallet.numLayers = newPallet.numLayers + orderList.get(i).getLayers();
 							newPallet.numPallets++;
 						}
-						else if (orderList.get(i).used == false && orderList.get(i).getLayers() == 1 && orderList.get(i).getLayers() 
+					}
+					for (int i = 0; i < orderList.size(); i++){
+						if (orderList.get(i).used == false && orderList.get(i).getLayers() == 1 && orderList.get(i).getLayers() 
 							+ newPallet.numLayers <= 6 && newPallet.numPallets <= 3){
 							newPallet.palletOrders.add(orderList.get(i));
 							orderList.get(i).used = true;
@@ -384,6 +411,7 @@ public class Pallet{
 					anyRemaining = false;
 				}
 				else{
+					anyRemaining = true;
 					break;
 				}
 			}
