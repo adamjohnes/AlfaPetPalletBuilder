@@ -1,4 +1,5 @@
 import java.util.*;
+import java.math.*;
 
 public class Pallet{
 
@@ -10,18 +11,37 @@ public class Pallet{
 		numPallets = 0;
 	}
 
+	public boolean have40()
+	{
+		for (Order order : palletOrders)
+		{
+			if (order.getCases() == 40)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public ArrayList<Order> sortedList(ArrayList<Order> orderList){
 		
-		int min = 1000;
+		int min = Integer.MAX_VALUE;
 		int size = orderList.size();
 		Order minOrder = new Order();
 		ArrayList<Order> orders = new ArrayList<Order>();
 
 		for (int i = 0; i < size; i++){
 			for (Order order : orderList){
+				if (order.getCases() == 40)
+				{
+					minOrder = order;
+					break;
+				}
 				minOrder = (order.getCases() <= min) ? order : minOrder;
 				min = minOrder.getCases();
 			}
+
 			orderList.remove(minOrder);
 			orders.add(minOrder);
 			min = 1000;
@@ -89,6 +109,7 @@ public class Pallet{
 	public ArrayList<Pallet> matchPallets(ArrayList<Pallet> finalizedPallets, ArrayList<Order> orderList){
 
 		int emergencyExit = 0;
+		int freeze = 0;
 
 		if (finalizedPallets.size() > 0){
 			for (Pallet pallet : finalizedPallets){
@@ -170,6 +191,22 @@ public class Pallet{
 								for (Order order : orderList){
 									if (order.getLayers() == 2 && order.getLayers() + pallet.numLayers <= 6 && pallet.numPallets <= 4 
 										&& order.used == false){
+										if (pallet.have40() && order.getCases() == 40)
+											{
+												freeze = freeze + 1;
+												if (freeze > 30)
+												{
+													pallet.palletOrders.add(order);
+													order.used = true;
+													pallet.numLayers = pallet.numLayers + order.getLayers();
+													pallet.numPallets++;
+													freeze = 0;
+												}
+												else
+												{
+													continue;
+												}
+											}
 										pallet.palletOrders.add(order);
 										order.used = true;
 										pallet.numLayers = pallet.numLayers + order.getLayers();
@@ -211,6 +248,7 @@ public class Pallet{
 		
 	public ArrayList<Pallet> finishPallets(ArrayList<Pallet> finalizedPallets, ArrayList<Order> orderList){
 
+		int freeze = 0;
 		int emergencyExit = 0;
 		boolean anyRemaining = true;
 
@@ -329,6 +367,22 @@ public class Pallet{
 					for (int i = 0; i < orderList.size(); i++){
 						if (orderList.get(i).used == false && orderList.get(i).getLayers() == 2 && orderList.get(i).getLayers() 
 							+ newPallet.numLayers <= 6 && newPallet.numPallets <= 3){
+							if (newPallet.have40() && orderList.get(i).getCases() == 40)
+							{
+								freeze = freeze + 1;
+								if (freeze > 30)
+								{
+									newPallet.palletOrders.add(orderList.get(i));
+									orderList.get(i).used = true;
+									newPallet.numLayers = newPallet.numLayers + orderList.get(i).getLayers();
+									newPallet.numPallets++;
+									freeze = 0;
+								}
+								else
+								{
+									continue;
+								}
+							}
 							newPallet.palletOrders.add(orderList.get(i));
 							orderList.get(i).used = true;
 							newPallet.numLayers = newPallet.numLayers + orderList.get(i).getLayers();
@@ -382,6 +436,22 @@ public class Pallet{
 					for (int i = 0; i < orderList.size(); i++){	
 						if (orderList.get(i).used == false && orderList.get(i).getLayers() == 2 && orderList.get(i).getLayers() 
 							+ newPallet.numLayers <= 6 && newPallet.numPallets <= 3){
+							if (newPallet.have40() && orderList.get(i).getCases() == 40)
+							{
+								freeze = freeze + 1;
+								if (freeze > 30)
+								{
+									newPallet.palletOrders.add(orderList.get(i));
+									orderList.get(i).used = true;
+									newPallet.numLayers = newPallet.numLayers + orderList.get(i).getLayers();
+									newPallet.numPallets++;
+									freeze = 0;
+								}
+								else
+								{
+									continue;
+								}
+							}
 							newPallet.palletOrders.add(orderList.get(i));
 							orderList.get(i).used = true;
 							newPallet.numLayers = newPallet.numLayers + orderList.get(i).getLayers();

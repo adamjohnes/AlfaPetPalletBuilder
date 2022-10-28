@@ -6,7 +6,7 @@ public class Main{
 	static ArrayList<Order> orderList = new ArrayList<Order>();
 
 	public static void main(String[] args){
-		orderList = returnOrders("routingStatus.csv");
+		orderList = returnOrders("routingStatusV3.csv");
 
 		/**for (Order order : orderList){
 			System.out.println(order);
@@ -80,13 +80,27 @@ public class Main{
 
 	public static String readPallets(ArrayList<Pallet> pallets){
 
+		int lines = 4;
 		sortOrders(pallets);
-		String message = "Date: " + pallets.get(0).palletOrders.get(0).confirmDate + "\n" + "Load ID: " 
+		String message = "\t\t--------------------------------ALFAPET ORDER LAYOUT SHEET--------------------------------\nDate: " + pallets.get(0).palletOrders.get(0).confirmDate + "\n" + "Load ID: " 
 		+ pallets.get(0).palletOrders.get(0).loadID + "\n\n";
 
 		for (int i = 0; i < pallets.size(); i++){
+			System.out.println(lines);
+			if (lines <= 40 && lines >= 37)
+			{
+				message = message + "\n\n\n";
+				lines = lines + 3;
+			}
+			if (lines <= 80 && lines >= 77)
+			{
+				message = message + "\n\n\n";
+				lines = lines + 3;
+			}
+
 		 	message = message + "Pallet #" + (i + 1) + "  --------------" + "----  Cases " + " ---  PO Destination # " 
 		 	+ " ---  Layers --- Destination Address" + "\n" + pallets.get(i).getPallet() + "\n\n";
+		 	lines = lines + 2 + pallets.get(i).numPallets;
 		}
 		return message;
 	}
