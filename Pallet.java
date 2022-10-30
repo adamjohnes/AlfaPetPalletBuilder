@@ -285,6 +285,17 @@ public class Pallet{
 					order.used = true;
 					newPallet.numLayers = 4;
 					newPallet.numPallets++;
+					for (Order order40: orderList)
+						{
+							if (order40.getLayers() == 2 && order40.getLayers() + newPallet.numLayers <= 6 && newPallet.numPallets <= 4 
+							&& order40.used == false && order40.getCases() == 40 && !newPallet.have40())
+							{
+								newPallet.palletOrders.add(order40);
+								order40.used = true;
+								newPallet.numLayers = newPallet.numLayers + order40.getLayers();
+								newPallet.numPallets++;
+							}
+						}
 					for (int i = 0; i < orderList.size(); i++){
 						if (orderList.get(i).used == false && orderList.get(i).getLayers() == 2 && orderList.get(i).getLayers() 
 							+ newPallet.numLayers <= 6 && newPallet.numPallets <= 3){
@@ -311,6 +322,17 @@ public class Pallet{
 					order.used = true;
 					newPallet.numLayers = 3;
 					newPallet.numPallets++;
+					for (Order order40: orderList)
+						{
+							if (order40.getLayers() == 2 && order40.getLayers() + newPallet.numLayers <= 6 && newPallet.numPallets <= 4 
+							&& order40.used == false && order40.getCases() == 40 && !newPallet.have40())
+							{
+								newPallet.palletOrders.add(order40);
+								order40.used = true;
+								newPallet.numLayers = newPallet.numLayers + order40.getLayers();
+								newPallet.numPallets++;
+							}
+						}
 					for (int i = 0; i < orderList.size(); i++){
 						if (orderList.get(i).used == false && orderList.get(i).getLayers() == 3 && orderList.get(i).getLayers() 
 							+ newPallet.numLayers <= 6 && newPallet.numPallets <= 3){
@@ -346,6 +368,17 @@ public class Pallet{
 					order.used = true;
 					newPallet.numLayers = 2;
 					newPallet.numPallets++;
+					for (Order order40: orderList)
+						{
+							if (order40.getLayers() == 2 && order40.getLayers() + newPallet.numLayers <= 6 && newPallet.numPallets <= 4 
+							&& order40.used == false && order40.getCases() == 40 && !newPallet.have40())
+							{
+								newPallet.palletOrders.add(order40);
+								order40.used = true;
+								newPallet.numLayers = newPallet.numLayers + order40.getLayers();
+								newPallet.numPallets++;
+							}
+						}
 					for (int i = 0; i < orderList.size(); i++){
 						if (orderList.get(i).used == false && orderList.get(i).getLayers() == 4 && orderList.get(i).getLayers() 
 							+ newPallet.numLayers <= 6 && newPallet.numPallets <= 3){
@@ -406,6 +439,17 @@ public class Pallet{
 					order.used = true;
 					newPallet.numLayers = 1;
 					newPallet.numPallets++;
+					for (Order order40: orderList)
+						{
+							if (order40.getLayers() == 2 && order40.getLayers() + newPallet.numLayers <= 6 && newPallet.numPallets <= 4 
+							&& order40.used == false && order40.getCases() == 40 && !newPallet.have40())
+							{
+								newPallet.palletOrders.add(order40);
+								order40.used = true;
+								newPallet.numLayers = newPallet.numLayers + order40.getLayers();
+								newPallet.numPallets++;
+							}
+						}
 					for (int i = 0; i < orderList.size(); i++){
 						if (orderList.get(i).used == false && orderList.get(i).getLayers() == 5 && orderList.get(i).getLayers() 
 							+ newPallet.numLayers <= 6 && newPallet.numPallets <= 3){
@@ -502,7 +546,7 @@ public class Pallet{
 	public String getPallet(){
 		String message = "";
 			for (Order order: palletOrders){
-				message = message + "Order: " + order + "\n"; //calls the order class toString()
+				message = message + "\t\t\t\t\t\t\t\t\t" + "Order: " + order + "\n"; //calls the order class toString()
 			}
 		return message;
 	}

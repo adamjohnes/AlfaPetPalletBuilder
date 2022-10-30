@@ -204,10 +204,10 @@ public class Order{
 	@Override
 	public String toString(){     
 		if (this.cases >= 100){
-			return this.poNumber + "            " + this.cases + "                     " + this.poDestination + "                   " 
-			+ this.layers + "             " + this.destAddress;
+			return this.poNumber + "            " + this.cases + "                    " + this.poDestination + "                    " 
+			+ this.layers + "              " + this.destAddress;
 		}
-		return this.poNumber + "             " + this.cases + "                      " + this.poDestination + "                   " 
+		return this.poNumber + "            " + this.cases + "                      " + this.poDestination + "                    " 
 		+ this.layers + "              " + this.destAddress;
 	}
 }
