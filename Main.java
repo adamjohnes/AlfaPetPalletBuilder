@@ -20,10 +20,12 @@ public class Main{
 
 		outputToFile(palletOrders);
 
+		/**
 		for (Pallet pallet : palletOrders){
 			System.out.print(pallet.getPallet());
 			System.out.println();
 		}
+		**/
 	}
 
 	public static ArrayList<Order> returnOrders(String fileName){
