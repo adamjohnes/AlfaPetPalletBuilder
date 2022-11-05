@@ -1,5 +1,7 @@
 # AlfaPetPalletBuilder
 A program that accepts a Walmart .csv and spits out a printable, organized .xlsx for physical use.
+The output is a printable sheet that warehouse workers can use to organize the orders on the warehouse floor more easily to be shipped.
+Each pallet is limited to six layers, and typically only a single order of 40 cases is allowed per pallet due to sizing issues.
 
 Example of input:
 
