@@ -1,5 +1,5 @@
 # AlfaPetPalletBuilder
-A program that accepts a Walmart .xlsx and spits out a printable, organized .csv for physical use.
+A program that accepts a Walmart .csv and spits out a printable, organized .xlsx for physical use.
 
 Example of input:
 
