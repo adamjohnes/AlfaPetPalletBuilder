@@ -9,5 +9,5 @@ Example of input:
 
 Example of output:
 
-![exampleOfOutput](https://user-images.githubusercontent.com/70388982/152674412-d5c584a1-d7ca-4a94-b04c-649ac273eade.png)
+![exampleOfOutput](https://user-images.githubusercontent.com/70388982/200099412-f13829bf-d211-4f40-a232-18eca3b10d7f.png)
 
